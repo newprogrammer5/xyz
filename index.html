@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hızlı Oku Online</title>
+<meta name="description" content="Kelimeleri göz açıp kapayana kadar oku. Hızını sen belirle, sınır yok. Ücretsiz hızlı okuma aracı.">
+<link rel="canonical" href="https://hizlioku.online/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hızlı Oku Online">
+<meta property="og:description" content="Kelimeleri göz açıp kapayana kadar oku. Hızını sen belirle, sınır yok.">
+<meta property="og:url" content="https://hizlioku.online/">
+<meta property="og:locale" content="tr_TR">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hızlı Oku Online">
+<meta name="twitter:description" content="Kelimeleri göz açıp kapayana kadar oku. Hızını sen belirle, sınır yok.">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 40'%3E%3Crect width='60' height='40' fill='%23e30a17'/%3E%3Ccircle cx='24' cy='20' r='9' fill='%23fff'/%3E%3Ccircle cx='26.5' cy='20' r='7.2' fill='%23e30a17'/%3E%3Cpolygon points='34,20 42,17.5 36.5,22.7 38.7,29.8 33,25.8 27.3,29.8 29.5,22.7 24,17.5' fill='%23fff' transform='translate(0,0)'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#f5f5f7;
+    --surface:#ffffff;
+    --text:#1d1d1f;
+    --text-secondary:#86868b;
+    --blue:#0071e3;
+    --blue-hover:#0077ed;
+    --blue-active:#006edb;
+    --divider:#d2d2d7;
+    --control-bg:#f0f0f2;
+    --control-bg-hover:#e5e5e7;
+    --black:#000000;
+  }
+  *{ box-sizing:border-box; }
+  html{ -webkit-font-smoothing:antialiased; }
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:0 0 100px;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .page-content{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:56px 20px 0;
+    width:100%;
+  }
+
+  .topbar{
+    width:100%;
+    background:rgba(255,255,255,0.8);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--divider);
+    position:sticky;
+    top:0;
+    z-index:10;
+  }
+  .topbar-inner{
+    max-width:1100px;
+    margin:0 auto;
+    padding:16px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:var(--text);
+  }
+  .brand svg{ width:20px; height:20px; color:var(--blue); }
+  .brand span{
+    font-size:15px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  .topbar-links{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  h1{
+    font-size:48px;
+    font-weight:700;
+    letter-spacing:-0.02em;
+    line-height:1.05;
+    text-align:center;
+    margin:0 0 14px;
+  }
+  p.sub{
+    color:var(--text-secondary);
+    text-align:center;
+    margin:0 0 44px;
+    font-size:19px;
+    font-weight:400;
+    max-width:480px;
+    line-height:1.4;
+  }
+  .link-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    margin-bottom:36px;
+    flex-wrap:wrap;
+  }
+  .donate-link{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--control-bg);
+    color:var(--text);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:600;
+    padding:10px 18px;
+    border-radius:980px;
+    transition:background .15s ease, transform .1s ease;
+  }
+  .donate-link svg{ width:16px; height:16px; flex-shrink:0; }
+  .donate-link:hover{ background:var(--control-bg-hover); }
+  .donate-link:active{ transform:scale(0.97); }
+
+  /* ---------- Card ---------- */
+  .card{
+    background:var(--surface);
+    border-radius:24px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.04), 0 12px 40px rgba(0,0,0,0.06);
+    padding:40px;
+    width:100%;
+    max-width:640px;
+  }
+  #readerWrap .card{ max-width:980px; padding:44px; }
+
+  label.field-label{
+    font-weight:600;
+    font-size:15px;
+    margin-bottom:12px;
+    display:block;
+    color:var(--text);
+  }
+  textarea{
+    width:100%;
+    min-height:200px;
+    resize:vertical;
+    border:1px solid transparent;
+    background:var(--control-bg);
+    border-radius:16px;
+    padding:18px;
+    font-size:16px;
+    line-height:1.6;
+    font-family:inherit;
+    color:var(--text);
+    transition:border-color .2s ease, background .2s ease;
+  }
+  textarea::placeholder{ color:var(--text-secondary); }
+  textarea:focus{
+    outline:none;
+    background:var(--surface);
+    border-color:var(--blue);
+    box-shadow:0 0 0 4px rgba(0,113,227,0.12);
+  }
+  .meta-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:12px;
+    font-size:13px;
+    color:var(--text-secondary);
+  }
+
+  /* ---------- Speed slider (custom) ---------- */
+  .controls-row{
+    margin-top:32px;
+  }
+  .speed-control{
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+  .speed-control > span:first-child{
+    font-size:15px;
+    font-weight:600;
+    color:var(--text);
+    white-space:nowrap;
+  }
+  input[type=range]{
+    -webkit-appearance:none;
+    appearance:none;
+    flex:1;
+    height:4px;
+    border-radius:2px;
+    background:linear-gradient(to right, var(--blue) 0%, var(--blue) var(--fill,50%), var(--divider) var(--fill,50%), var(--divider) 100%);
+    outline:none;
+    cursor:pointer;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    appearance:none;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:#ffffff;
+    box-shadow:0 1px 4px rgba(0,0,0,0.25), 0 0 0 1px rgba(0,0,0,0.04);
+    cursor:pointer;
+    transition:transform .15s ease;
+  }
+  input[type=range]::-webkit-slider-thumb:hover{ transform:scale(1.1); }
+  input[type=range]::-moz-range-thumb{
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:#ffffff;
+    border:none;
+    box-shadow:0 1px 4px rgba(0,0,0,0.25), 0 0 0 1px rgba(0,0,0,0.04);
+    cursor:pointer;
+  }
+  input[type=range]::-moz-range-track{
+    height:4px;
+    border-radius:2px;
+    background:var(--divider);
+  }
+  .speed-value{
+    font-weight:600;
+    font-size:15px;
+    min-width:112px;
+    text-align:right;
+    font-variant-numeric:tabular-nums;
+  }
+
+  /* ---------- Primary button ---------- */
+  .start-btn{
+    background:var(--blue);
+    color:#fff;
+    border:none;
+    padding:16px 24px;
+    border-radius:980px;
+    font-size:17px;
+    font-weight:600;
+    cursor:pointer;
+    width:100%;
+    margin-top:32px;
+    transition:background .15s ease, transform .1s ease;
+    font-family:inherit;
+  }
+  .start-btn:hover{ background:var(--blue-hover); }
+  .start-btn:active{ background:var(--blue-active); transform:scale(0.985); }
+
+  /* ---------- View toggle ---------- */
+  .reader-wrap{ display:none; }
+  .reader-wrap.active{ display:block; }
+  .setup-wrap.hidden{ display:none; }
+
+  /* ---------- Display box ---------- */
+  .display-box{
+    background:var(--black);
+    border-radius:20px;
+    height:220px;
+    min-height:220px;
+    max-height:220px;
+    width:900px;
+    min-width:900px;
+    max-width:900px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+    box-sizing:border-box;
+    flex-shrink:0;
+  }
+  .word{
+    color:#fff;
+    font-weight:700;
+    font-size:46px;
+    letter-spacing:-0.01em;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",Helvetica,Arial,sans-serif;
+    text-align:center;
+    padding:0 28px;
+    white-space:nowrap;
+    max-width:100%;
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  /* ---------- Icon buttons ---------- */
+  .btn-row{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:14px;
+    margin-top:30px;
+    flex-wrap:wrap;
+  }
+  .icon-btn{
+    background:var(--control-bg);
+    color:var(--text);
+    border:none;
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    padding:0;
+    flex-shrink:0;
+    transition:background .15s ease, transform .1s ease;
+  }
+  .icon-btn svg{ width:20px; height:20px; }
+  .icon-btn:hover{ background:var(--control-bg-hover); }
+  .icon-btn:active{ transform:scale(0.94); }
+  .icon-btn.play{
+    background:var(--blue);
+    color:#fff;
+    width:64px;
+    height:64px;
+  }
+  .icon-btn.play svg{ width:24px; height:24px; }
+  .icon-btn.play:hover{ background:var(--blue-hover); }
+  .icon-btn.play:active{ background:var(--blue-active); }
+
+  /* ---------- Stats ---------- */
+  .stats-row{
+    display:flex;
+    justify-content:center;
+    gap:36px;
+    margin-top:26px;
+    font-size:14px;
+    color:var(--text-secondary);
+  }
+  .stats-row b{
+    color:var(--text);
+    font-variant-numeric:tabular-nums;
+    font-weight:600;
+  }
+
+  .progress-bar-bg{
+    width:100%;
+    height:4px;
+    background:var(--divider);
+    border-radius:2px;
+    margin-top:24px;
+    overflow:hidden;
+  }
+  .progress-bar-fill{
+    height:100%;
+    background:var(--blue);
+    width:0%;
+    border-radius:2px;
+    transition:width .1s linear;
+  }
+
+  .shortcuts{
+    text-align:center;
+    font-size:12px;
+    color:var(--text-secondary);
+    margin-top:26px;
+  }
+  .reader-speed-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    margin-top:30px;
+    max-width:420px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .reader-speed-row span:first-child{
+    font-size:15px;
+    font-weight:600;
+    white-space:nowrap;
+  }
+  .reader-speed-row input[type=range]{ width:240px; }
+  .reader-speed-row .speed-value{ min-width:88px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 640px){
+    body{ padding:44px 16px 80px; }
+    h1{ font-size:32px; }
+    p.sub{ font-size:16px; margin-bottom:32px; }
+    .card{ padding:26px; border-radius:20px; }
+    #readerWrap .card{ padding:24px; }
+    textarea{ min-height:160px; font-size:15px; padding:14px; }
+    .start-btn{ padding:15px 22px; }
+    .display-box{
+      width:100%;
+      min-width:0;
+      max-width:100%;
+      height:170px;
+      min-height:170px;
+      max-height:170px;
+      border-radius:16px;
+      margin:0;
+    }
+    .word{ font-size:28px; padding:0 14px; }
+    .btn-row{ gap:10px; margin-top:24px; }
+    .icon-btn{ width:44px; height:44px; }
+    .icon-btn svg{ width:17px; height:17px; }
+    .icon-btn.play{ width:56px; height:56px; }
+    .icon-btn.play svg{ width:21px; height:21px; }
+    .stats-row{ flex-direction:column; align-items:center; gap:6px; font-size:13px; margin-top:20px; }
+    .reader-speed-row{ flex-direction:column; gap:10px; }
+    .reader-speed-row input[type=range]{ width:100%; max-width:280px; }
+    .shortcuts{ font-size:11px; }
+  }
+
+  @media (max-width: 400px){
+    .display-box{ height:140px; min-height:140px; max-height:140px; }
+    .word{ font-size:22px; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner" style="flex-direction:column; gap:12px;">
+      <div class="topbar-links">
+        <a href="https://buymeacoffee.com/hizlioku" target="_blank" rel="noopener" class="donate-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><path d="M6 1v3M10 1v3M14 1v3"/></svg>
+          Bana bir kahve ısmarla
+        </a>
+        <a href="https://www.youtube.com" target="_blank" rel="noopener" class="donate-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 8.5s-.2-1.6-.8-2.3c-.8-.9-1.7-.9-2.1-1C16.3 5 12 5 12 5h0s-4.3 0-7.1.2c-.4 0-1.3.1-2.1 1C2.2 6.9 2 8.5 2 8.5S1.8 10.3 1.8 12.1v1.7C1.8 15.6 2 17.4 2 17.4s.2 1.6.8 2.3c.8.9 1.9.9 2.4 1C7 20.9 12 21 12 21s4.3 0 7.1-.2c.4 0 1.3-.1 2.1-1 .6-.7.8-2.3.8-2.3s.2-1.8.2-3.6v-1.7c0-1.8-.2-3.6-.2-3.6z"/><path d="M10 15.2l5.5-3.2L10 8.8v6.4z" fill="currentColor" stroke="none"/></svg>
+          YouTube
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-content">
+
+  <div class="setup-wrap" id="setupWrap">
+    <h1>Hızlı Oku Online</h1>
+    <p class="sub" style="font-size:28px; margin-bottom:44px;">🇹🇷</p>
+
+    <div class="card">
+      <label class="field-label" for="textInput">Metni yapıştır</label>
+      <textarea id="textInput" placeholder="Okumak istediğin metni buraya yapıştır..."></textarea>
+      <div class="meta-row">
+        <span id="charCount">0 karakter · 0 kelime</span>
+        <span>Sınır yok</span>
+      </div>
+
+      <div class="controls-row">
+        <div class="speed-control">
+          <span>Hız</span>
+          <input type="range" id="speedSlider" min="100" max="900" step="10" value="300">
+          <span class="speed-value" id="speedValue">300 wpm</span>
+        </div>
+      </div>
+
+      <button class="start-btn" id="startBtn">Okumaya Başla</button>
+    </div>
+  </div>
+
+  <div class="reader-wrap" id="readerWrap">
+    <div class="card">
+      <div class="display-box">
+        <div class="word" id="wordDisplay">Hazır</div>
+      </div>
+
+      <div class="btn-row">
+        <button class="icon-btn" id="restartBtn" title="Baştan başlat (R)">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zM19 6.5v11a.9.9 0 01-1.37.76l-8.8-5.5a.9.9 0 010-1.52l8.8-5.5A.9.9 0 0119 6.5z"/></svg>
+        </button>
+        <button class="icon-btn" id="prevBtn" title="Bir kelime geri git">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+        <button class="icon-btn play" id="playBtn" title="Oynat/Duraklat (Space)">
+          <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button class="icon-btn" id="nextBtn" title="Bir kelime ileri git">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+        <button class="icon-btn" id="editBtn" title="Metni düzenle (N)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </button>
+      </div>
+
+      <div class="stats-row">
+        <span>Hız · <b id="wpmLabel">300</b> wpm</span>
+        <span>İlerleme · <b id="progressLabel">0</b>%</span>
+        <span>Kelime · <b id="wordPos">0</b> / <b id="wordTotal">0</b></span>
+      </div>
+
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progressFill"></div>
+      </div>
+
+      <div class="reader-speed-row">
+        <span>Hız</span>
+        <input type="range" id="readerSpeedSlider" min="100" max="900" step="10" value="300">
+        <span class="speed-value" id="readerSpeedValue">300 wpm</span>
+      </div>
+
+    </div>
+  </div>
+
+  </div>
+
+<script>
+  const textInput = document.getElementById('textInput');
+  const charCount = document.getElementById('charCount');
+  const speedSlider = document.getElementById('speedSlider');
+  const speedValue = document.getElementById('speedValue');
+  const startBtn = document.getElementById('startBtn');
+
+  const setupWrap = document.getElementById('setupWrap');
+  const readerWrap = document.getElementById('readerWrap');
+
+  const wordDisplay = document.getElementById('wordDisplay');
+  const playBtn = document.getElementById('playBtn');
+  const playIcon = document.getElementById('playIcon');
+  const restartBtn = document.getElementById('restartBtn');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const editBtn = document.getElementById('editBtn');
+  const wpmLabel = document.getElementById('wpmLabel');
+  const progressLabel = document.getElementById('progressLabel');
+  const wordPos = document.getElementById('wordPos');
+  const wordTotal = document.getElementById('wordTotal');
+  const progressFill = document.getElementById('progressFill');
+  const readerSpeedSlider = document.getElementById('readerSpeedSlider');
+  const readerSpeedValue = document.getElementById('readerSpeedValue');
+
+  const ICON_PLAY = '<path d="M8 5v14l11-7z"/>';
+  const ICON_PAUSE = '<path d="M6 5h4.5v14H6zM13.5 5H18v14h-4.5z"/>';
+
+  let words = [];
+  let currentIndex = 0;
+  let isPlaying = false;
+  let timerId = null;
+  let wpm = 300;
+
+  function updateCharCount(){
+    const text = textInput.value;
+    const wc = text.trim().length ? text.trim().split(/\s+/).length : 0;
+    charCount.textContent = `${text.length} karakter · ${wc} kelime`;
+  }
+  textInput.addEventListener('input', updateCharCount);
+  updateCharCount();
+
+  function updateSliderFill(el){
+    const min = parseFloat(el.min), max = parseFloat(el.max), val = parseFloat(el.value);
+    const pct = ((val - min) / (max - min)) * 100;
+    el.style.setProperty('--fill', pct + '%');
+  }
+  updateSliderFill(speedSlider);
+  updateSliderFill(readerSpeedSlider);
+
+  speedSlider.addEventListener('input', ()=>{
+    wpm = parseInt(speedSlider.value);
+    speedValue.textContent = `${wpm} wpm`;
+    readerSpeedSlider.value = wpm;
+    readerSpeedValue.textContent = `${wpm} wpm`;
+    wpmLabel.textContent = wpm;
+    updateSliderFill(speedSlider);
+    updateSliderFill(readerSpeedSlider);
+  });
+
+  readerSpeedSlider.addEventListener('input', ()=>{
+    wpm = parseInt(readerSpeedSlider.value);
+    readerSpeedValue.textContent = `${wpm} wpm`;
+    speedSlider.value = wpm;
+    speedValue.textContent = `${wpm} wpm`;
+    wpmLabel.textContent = wpm;
+    updateSliderFill(readerSpeedSlider);
+    updateSliderFill(speedSlider);
+    if(isPlaying){
+      clearTimeout(timerId);
+      scheduleNext();
+    }
+  });
+
+  function getDelay(){
+    return 60000 / wpm;
+  }
+
+  function renderWord(){
+    const w = words[currentIndex] || '';
+    wordDisplay.textContent = w;
+    wordPos.textContent = currentIndex + 1 <= words.length ? currentIndex + 1 : words.length;
+    wordTotal.textContent = words.length;
+    const pct = words.length ? Math.round((currentIndex / words.length) * 100) : 0;
+    progressLabel.textContent = pct;
+    progressFill.style.width = pct + '%';
+  }
+
+  function scheduleNext(){
+    if(currentIndex >= words.length){
+      pause();
+      wordDisplay.textContent = 'Bitti';
+      return;
+    }
+    renderWord();
+    const delay = getDelay();
+    timerId = setTimeout(()=>{
+      currentIndex++;
+      scheduleNext();
+    }, delay);
+  }
+
+  function play(){
+    if(words.length === 0) return;
+    if(currentIndex >= words.length) currentIndex = 0;
+    isPlaying = true;
+    document.getElementById('playIcon').innerHTML = ICON_PAUSE;
+    scheduleNext();
+  }
+
+  function pause(){
+    isPlaying = false;
+    document.getElementById('playIcon').innerHTML = ICON_PLAY;
+    clearTimeout(timerId);
+  }
+
+  function togglePlay(){
+    if(isPlaying) pause();
+    else play();
+  }
+
+  function restart(){
+    pause();
+    currentIndex = 0;
+    renderWord();
+    wordDisplay.textContent = 'Hazır';
+  }
+
+  function stepBack(){
+    pause();
+    currentIndex = Math.max(0, currentIndex - 1);
+    renderWord();
+  }
+
+  function stepForward(){
+    pause();
+    currentIndex = Math.min(words.length - 1, currentIndex + 1);
+    renderWord();
+  }
+
+  startBtn.addEventListener('click', ()=>{
+    const text = textInput.value.trim();
+    if(!text){
+      textInput.focus();
+      return;
+    }
+    words = text.split(/\s+/).filter(w => w.length > 0);
+    currentIndex = 0;
+    wpm = parseInt(speedSlider.value);
+    wpmLabel.textContent = wpm;
+    readerSpeedSlider.value = wpm;
+    readerSpeedValue.textContent = `${wpm} wpm`;
+    updateSliderFill(readerSpeedSlider);
+    wordTotal.textContent = words.length;
+    setupWrap.classList.add('hidden');
+    readerWrap.classList.add('active');
+    play();
+  });
+
+  playBtn.addEventListener('click', togglePlay);
+  restartBtn.addEventListener('click', restart);
+  prevBtn.addEventListener('click', stepBack);
+  nextBtn.addEventListener('click', stepForward);
+  editBtn.addEventListener('click', ()=>{
+    pause();
+    readerWrap.classList.remove('active');
+    setupWrap.classList.remove('hidden');
+  });
+
+  document.addEventListener('keydown', (e)=>{
+    if(!readerWrap.classList.contains('active')) return;
+    if(e.code === 'Space'){
+      e.preventDefault();
+      togglePlay();
+    } else if(e.code === 'KeyR'){
+      restart();
+    } else if(e.code === 'ArrowLeft'){
+      stepBack();
+    } else if(e.code === 'ArrowRight'){
+      stepForward();
+    } else if(e.code === 'KeyN'){
+      pause();
+      readerWrap.classList.remove('active');
+      setupWrap.classList.remove('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
