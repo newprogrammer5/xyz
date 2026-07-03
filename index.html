@@ -3,15 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hızlı Oku Online</title>
-<meta name="description" content="Kelimeleri göz açıp kapayana kadar oku. Hızını sen belirle, sınır yok. Ücretsiz hızlı okuma aracı.">
+<title>Hızlı Oku Online – Ücretsiz Hızlı Okuma Uygulaması (RSVP Yöntemi)</title>
+<meta name="description" content="Hızlı okuma pratiği yap: metnini yapıştır, kelimeler ekranda tek tek akışına göre görünsün. Dakikada 100-900 kelime hızında, ücretsiz ve üyeliksiz hızlı okuma antrenmanı.">
+<meta name="keywords" content="hızlı okuma, hızlı okuma teknikleri, hızlı okuma egzersizi, hızlı okuma uygulaması, RSVP okuma, okuma hızı arttırma, online hızlı okuma">
+<meta name="author" content="Hızlı Oku Online">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://hizlioku.online/">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Hızlı Oku Online">
-<meta property="og:description" content="Kelimeleri göz açıp kapayana kadar oku. Hızını sen belirle, sınır yok.">
+<meta property="og:title" content="Hızlı Oku Online – Ücretsiz Hızlı Okuma Uygulaması">
+<meta property="og:description" content="Kelimeleri göz açıp kapayana kadar oku. Hızını sen belirle, sınır yok. Hızlı okuma pratiği yapmanın en kolay yolu.">
 <meta property="og:url" content="https://hizlioku.online/">
 <meta property="og:locale" content="tr_TR">
+<meta property="og:site_name" content="Hızlı Oku Online">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Hızlı Oku Online",
+  "url": "https://hizlioku.online/",
+  "description": "Ücretsiz hızlı okuma uygulaması. Metninizi yapıştırın, kelimeler RSVP yöntemiyle ekranda tek tek akar; hızınızı 100-900 wpm arasında siz belirlersiniz.",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any",
+  "inLanguage": "tr",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "TRY"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Hızlı okuma uygulaması nasıl kullanılır?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Metninizi kutuya yapıştırın, okuma hızınızı (100-900 kelime/dakika) seçin ve Okumaya Başla butonuna basın. Kelimeler ekranda sırayla, seçtiğiniz hızda görünür."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hızlı Oku Online ücretsiz mi?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Evet, Hızlı Oku Online tamamen ücretsizdir ve üyelik gerektirmez."
+      }
+    }
+  ]
+}
+</script>
 
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hızlı Oku Online">
@@ -43,6 +90,15 @@
     --black:#000000;
   }
   *{ box-sizing:border-box; }
+  .visually-hidden{
+    position:absolute !important;
+    width:1px; height:1px;
+    padding:0; margin:-1px;
+    overflow:hidden;
+    clip:rect(0,0,0,0);
+    white-space:nowrap;
+    border:0;
+  }
   html{ -webkit-font-smoothing:antialiased; }
   body{
     margin:0;
@@ -461,11 +517,12 @@
 
   <div class="setup-wrap" id="setupWrap">
     <h1>Hızlı Oku Online</h1>
-    <p class="sub" style="font-size:28px; margin-bottom:44px;">🇹🇷</p>
+    <p class="sub" style="font-size:28px; margin-bottom:44px;" aria-hidden="true">🇹🇷</p>
+    <span class="visually-hidden">Ücretsiz hızlı okuma uygulaması: metninizi yapıştırın, kelime kelime akan hızlı okuma antrenmanıyla okuma hızınızı artırın.</span>
 
-    <div class="card">
+    <main class="card">
       <label class="field-label" for="textInput">Metni yapıştır</label>
-      <textarea id="textInput" placeholder="Okumak istediğin metni buraya yapıştır..."></textarea>
+      <textarea id="textInput" placeholder="Okumak istediğin metni buraya yapıştır..." aria-label="Hızlı okumak istediğiniz metni buraya yapıştırın"></textarea>
       <div class="meta-row">
         <span id="charCount">0 karakter · 0 kelime</span>
         <span>Sınır yok</span>
@@ -480,7 +537,7 @@
       </div>
 
       <button class="start-btn" id="startBtn">Okumaya Başla</button>
-    </div>
+    </main>
   </div>
 
   <div class="reader-wrap" id="readerWrap">
